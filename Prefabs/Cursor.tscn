@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c5q5bnkpi74te"]
 
-[ext_resource type="Texture2D" uid="uid://dqubdggkdf5gi" path="res://cozyglow.png" id="1_ma584"]
+[ext_resource type="Texture2D" uid="uid://d2g15h4e6inrb" path="res://target.png" id="1_ma584"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_22d1t"]
 
