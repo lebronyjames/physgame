@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://bwualeiryvemo"]
+
+[ext_resource type="Script" uid="uid://dpw1g0ftfjxeg" path="res://Scripts/Controller.gd" id="1_x3d5u"]
+[ext_resource type="Texture2D" uid="uid://dqubdggkdf5gi" path="res://cozyglow.png" id="2_b43ah"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o3cl4"]
+size = Vector3(1, 0.6563721, 1)
+
+[sub_resource type="Animation" id="Animation_x3d5u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraRoot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.5707964, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_b43ah"]
+resource_name = "XZ_Mode"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraRoot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.5707964, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_shmu5"]
+_data = {
+&"RESET": SubResource("Animation_x3d5u"),
+&"XZ_Mode": SubResource("Animation_b43ah")
+}
+
+[node name="Player" type="CharacterBody3D" unique_id=751433719]
+script = ExtResource("1_x3d5u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=509311057]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("BoxShape3D_o3cl4")
+
+[node name="Sprite3D" type="Sprite3D" parent="CollisionShape3D" unique_id=1095324360]
+transform = Transform3D(0.14133221, 0, 0, 0, 0.08682954, 0, 0, 0, 1, 0, -0.0062476397, 0)
+texture = ExtResource("2_b43ah")
+
+[node name="CameraRoot" type="Node3D" parent="." unique_id=1752351649]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraRoot" unique_id=551157455]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20825344, 2.4747703)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=372633741]
+libraries/ = SubResource("AnimationLibrary_shmu5")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c5q5bnkpi74te"]
+
+[ext_resource type="Texture2D" uid="uid://dqubdggkdf5gi" path="res://cozyglow.png" id="1_ma584"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_22d1t"]
+
+[node name="StaticBody3D" type="StaticBody3D" unique_id=697694254 groups=["Interactible"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=779329642]
+shape = SubResource("BoxShape3D_22d1t")
+disabled = true
+
+[node name="Sprite3D" type="Sprite3D" parent="CollisionShape3D" unique_id=1815869593]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+billboard = 1
+texture = ExtResource("1_ma584")

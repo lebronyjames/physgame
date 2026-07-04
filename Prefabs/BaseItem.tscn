@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://si5yfxehfbmg"]
+
+[ext_resource type="Script" uid="uid://duww7cy6js02f" path="res://Scripts/Interactible.gd" id="1_hselu"]
+[ext_resource type="Texture2D" uid="uid://b63qhhkm50ln7" path="res://icon.svg" id="2_q744p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rlx2o"]
+size = Vector3(1, 1, 0.16699219)
+
+[node name="Item" type="RigidBody3D" unique_id=122661780 groups=["Interactible"]]
+script = ExtResource("1_hselu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=749514238]
+transform = Transform3D(0.6029203, 0, 0, 0, 0.33373427, 0, 0, 0, 1, 0, 0, 0.015136719)
+shape = SubResource("BoxShape3D_rlx2o")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=520207375]
+transform = Transform3D(0.6029203, 0, 0, 0, 0.33373427, 0, 0, 0, 1, 0, 0, 0)
+texture = ExtResource("2_q744p")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
