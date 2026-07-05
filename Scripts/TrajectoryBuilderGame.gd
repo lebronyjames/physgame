@@ -18,7 +18,6 @@ enum ObjectMode {
 
 var camera_root: Node3D
 var camera: Camera3D
-var current_camera_mode: CameraMode
 var object_mode: ObjectMode
 var selected_object: Node3D
 var drag_plane: Plane
@@ -29,7 +28,6 @@ var cached_free_camera_angle: Vector3
 func _ready() -> void:
 	camera_root = find_child("CameraRoot")
 	camera = find_child("Camera3D")
-	current_camera_mode = CameraMode.Free
 	object_mode = ObjectMode.SelectObject
 	selected_object = null
 	trajectory_pointer = null
@@ -38,26 +36,20 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("xz_mode"):
-		current_camera_mode = CameraMode.XZAxis
 		camera_root.rotation = Vector3(deg_to_rad(-90), 0, 0)
 		calculate_plane()
 	elif Input.is_action_pressed("y_mode"):
-		current_camera_mode = CameraMode.YAxis
 		camera_root.rotation = Vector3(0, 0, 0)
 		calculate_plane()
 	elif Input.is_action_pressed("free_mode"):
-		current_camera_mode = CameraMode.Free
 		camera_root.rotation = cached_free_camera_angle
+		calculate_plane()
 	
-	if current_camera_mode == CameraMode.Free:
-		pan_free_camera(delta)
-	else:
+	pan_free_camera(delta)
+	
+	if object_mode == ObjectMode.SelectTrajectory:
 		if Input.is_action_pressed("click"):
-			if object_mode == ObjectMode.SelectTrajectory:  
-				if current_camera_mode == CameraMode.XZAxis:
-					drag_cursor_xz()
-				elif current_camera_mode == CameraMode.YAxis:
-					drag_cursor_y()
+			drag_cursor()
 			
 	if Input.is_action_just_released("zoom_back"):
 		var next_zoom_pos = camera.position.z + zoom_rate * delta
@@ -92,35 +84,21 @@ func pan_free_camera(delta):
 	if Input.is_action_pressed("pan_camera_right"):
 		camera_root.rotation.y += 1 * delta
 	cached_free_camera_angle = camera_root.rotation
+	calculate_plane()
 
-func drag_cursor_xz():
+func drag_cursor():
 	var mouse_pos = get_viewport().get_mouse_position()
 	var from = camera.project_ray_origin(mouse_pos)
 	var drag_ray = camera.project_ray_normal(mouse_pos)
 	var new_cursor_point = drag_plane.intersects_ray(from, drag_ray)
 	
-	var selected_object_point_xz = selected_object.position * Vector3(1,0,1)
-	var new_cursor_point_xz = new_cursor_point * Vector3(1,0,1)
-	var distance_from_obj = abs(selected_object_point_xz.distance_to(new_cursor_point_xz))
 	if new_cursor_point != null:
+		var distance_from_obj = abs(selected_object.position.distance_to(new_cursor_point))
 		if distance_from_obj <= max_dist_from_obj:
 			trajectory_pointer.position = new_cursor_point
 		else:
 			var ray = ((new_cursor_point as Vector3) - selected_object.position).normalized()
-			var diff = ((selected_object.position + ray * max_dist_from_obj) - trajectory_pointer.position) * Vector3(1,0,1)
-			trajectory_pointer.position += diff
-
-func drag_cursor_y():
-	var mouse_pos = get_viewport().get_mouse_position()
-	var from = camera.project_ray_origin(mouse_pos)
-	var drag_ray = camera.project_ray_normal(mouse_pos)
-	var new_cursor_point = drag_plane.intersects_ray(from, drag_ray)
-	var distance_from_obj = abs(selected_object.position.y - new_cursor_point.y)
-	if new_cursor_point != null:
-		if distance_from_obj <= max_dist_from_obj:
-			trajectory_pointer.position.y = new_cursor_point.y
-		else:
-			trajectory_pointer.position.y = selected_object.position.y + max_dist_from_obj
+			trajectory_pointer.position = (selected_object.position + ray * max_dist_from_obj)
 
 func switch_to_select_object():
 	selected_object = null
