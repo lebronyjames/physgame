@@ -1,5 +1,8 @@
 extends Node3D
 
+signal Update_Pull_Force
+signal Update_Shopping_List
+
 enum CameraMode {
 	Free,
 	XZAxis,
@@ -11,10 +14,13 @@ enum ObjectMode {
 	SelectTrajectory
 }
 
+@export var shopping_list: Dictionary[String, int]
+
 @export var trajectory_cursor_type: PackedScene
 @export var max_dist_from_obj: float = 1
 @export var max_zoomout: float = 3.5
 @export var zoom_rate: float = 3
+@export var max_force: float = 10
 
 var camera_root: Node3D
 var camera: Camera3D
@@ -23,6 +29,10 @@ var selected_object: Node3D
 var drag_plane: Plane
 var trajectory_pointer: Node3D
 var cached_free_camera_angle: Vector3
+var current_line: Node3D
+var Force_Modifier: float
+var done_shopping: bool
+var checked_out: bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,6 +42,11 @@ func _ready() -> void:
 	selected_object = null
 	trajectory_pointer = null
 	cached_free_camera_angle = camera_root.rotation
+	Force_Modifier = 6
+	emit_signal("Update_Pull_Force", Force_Modifier)
+	emit_signal("Update_Shopping_List", shopping_list)
+	done_shopping = false
+	checked_out = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -47,10 +62,19 @@ func _process(delta: float) -> void:
 	
 	pan_free_camera(delta)
 	
-	if object_mode == ObjectMode.SelectTrajectory:
-		if Input.is_action_pressed("click"):
+	if Input.is_action_just_pressed("add_force"):
+		Force_Modifier += 1
+		if Force_Modifier > max_force:
+			Force_Modifier = max_force
+		emit_signal("Update_Pull_Force", Force_Modifier)
+	if Input.is_action_just_pressed("reduce_force"):
+		Force_Modifier -= 1
+		if Force_Modifier < 0.5:
+			Force_Modifier = 0.5
+		emit_signal("Update_Pull_Force", Force_Modifier)
+	if Input.is_action_pressed("click"):
+		if object_mode == ObjectMode.SelectTrajectory:
 			drag_cursor()
-			
 	if Input.is_action_just_released("zoom_back"):
 		var next_zoom_pos = camera.position.z + zoom_rate * delta
 		if next_zoom_pos < max_zoomout:
@@ -63,6 +87,10 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("esc"):
 		if object_mode == ObjectMode.SelectTrajectory:
 			switch_to_select_object()
+			
+	if Input.is_action_pressed("launch"):
+		if object_mode == ObjectMode.SelectTrajectory:
+			launch_object()
 
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("click")):
@@ -99,16 +127,48 @@ func drag_cursor():
 		else:
 			var ray = ((new_cursor_point as Vector3) - selected_object.position).normalized()
 			trajectory_pointer.position = (selected_object.position + ray * max_dist_from_obj)
+		
+		# generate line
+		if current_line != null:
+			current_line.queue_free()
+		var mesh_instance = generate_line(selected_object.position, trajectory_pointer.position)	
+		current_line = mesh_instance
+		get_tree().get_root().add_child(mesh_instance)
+
+func launch_object():
+	var Explosion_Dir = (trajectory_pointer.global_position - selected_object.global_position)
+	selected_object.apply_impulse(Explosion_Dir * Force_Modifier)
+	switch_to_select_object()
 
 func switch_to_select_object():
 	selected_object = null
 	trajectory_pointer.queue_free()
 	trajectory_pointer = null
+	current_line.queue_free()
+	current_line = null
 	object_mode = ObjectMode.SelectObject
 
 func calculate_plane():
 	if trajectory_pointer != null:
 		drag_plane = Plane(-camera.global_transform.basis.z, trajectory_pointer.global_position)
+
+func generate_line(from: Vector3, to: Vector3):
+	var mesh_instance = MeshInstance3D.new()
+	var draw_mesh = ImmediateMesh.new()
+	var material = ORMMaterial3D.new()
+	
+	mesh_instance.mesh = draw_mesh
+	mesh_instance.cast_shadow = false
+	
+	draw_mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
+	draw_mesh.surface_add_vertex(from)
+	draw_mesh.surface_add_vertex(to)
+	draw_mesh.surface_end()
+	
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.albedo_color = Color.RED
+
+	return mesh_instance
 
 func cast_for_item(event: InputEvent) -> void:
 	if object_mode == ObjectMode.SelectObject:
@@ -121,7 +181,6 @@ func cast_for_item(event: InputEvent) -> void:
 		if result:
 			var clicked_object = result.collider
 			if clicked_object.is_in_group("Interactible"):
-				print("Clicked on " + clicked_object.object_name)
 				selected_object = clicked_object
 				object_mode = ObjectMode.SelectTrajectory
 				
@@ -129,3 +188,17 @@ func cast_for_item(event: InputEvent) -> void:
 				trajectory_pointer.global_position = selected_object.get_global_transform().origin
 				add_child(trajectory_pointer)
 				calculate_plane()
+
+func _on_player_capture_item(body: Node3D) -> void:
+	if body == selected_object:
+		switch_to_select_object()
+	
+	var object_name = body.object_name
+	if object_name in shopping_list:
+		shopping_list[object_name] -= 1
+		if shopping_list[object_name] == 0:
+			shopping_list.erase(object_name)
+		emit_signal("Update_Shopping_List", shopping_list)
+		
+	if len(shopping_list.keys()) == 0:
+		done_shopping = true

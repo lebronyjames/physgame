@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dj06mb7torada"]
+
+[ext_resource type="Script" uid="uid://duww7cy6js02f" path="res://Scripts/Interactible.gd" id="1_laap1"]
+[ext_resource type="AudioStream" uid="uid://cmnwg2ga1qjmq" path="res://Sfx/bump.mp3" id="2_3ai62"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ai62"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8tn17"]
+
+[node name="BakedBeans" type="RigidBody3D" unique_id=122661780 node_paths=PackedStringArray("Audio_Player") groups=["Interactible"]]
+physics_material_override = SubResource("PhysicsMaterial_3ai62")
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_laap1")
+Audio_Player = NodePath("AudioStreamPlayer3D")
+Bump_Sfx = ExtResource("2_3ai62")
+object_name = "Baked Beans"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=749514238]
+transform = Transform3D(0.15, 0, 0, 0, 0.07919532, 0, 0, 0, 0.15, 0, 0, 0.015136719)
+shape = SubResource("CylinderShape3D_8tn17")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="." unique_id=1463797127]
+transform = Transform3D(0.16267394, 0, 0, 0, 0.06549936, 0, 0, 0, 0.16740489, 0, 0, 0.015136719)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1999360639]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
