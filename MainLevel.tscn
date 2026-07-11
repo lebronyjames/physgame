@@ -24,6 +24,8 @@
 [ext_resource type="Script" uid="uid://dk080vuk1v1tm" path="res://Scripts/CheckoutTimer.gd" id="20_tx3db"]
 [ext_resource type="Texture2D" uid="uid://cpf4eg6ees2i1" path="res://Assets/cashregister.png" id="22_4sn81"]
 [ext_resource type="AudioStream" uid="uid://b163kwn01aqf8" path="res://Sfx/cashier.mp3" id="22_7edlk"]
+[ext_resource type="Script" uid="uid://8q6h1d6btcdx" path="res://Scripts/ButcherArea.gd" id="24_bbtm7"]
+[ext_resource type="AudioStream" uid="uid://dupvronn7d0uo" path="res://Sfx/hellnah.mp3" id="26_c6gt8"]
 
 [sub_resource type="Sky" id="Sky_fi62q"]
 resource_local_to_scene = true
@@ -84,6 +86,9 @@ size = Vector3(0.9376221, 1, 2.5861816)
 size = Vector3(0.5015869, 1, 0.7285156)
 
 [sub_resource type="FontFile" id="FontFile_tx3db"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/variation_coordinates = {}
 cache/0/face_index = 0
 cache/0/embolden = 0.0
@@ -103,6 +108,9 @@ cache/0/32/0/descent = 0.0
 cache/0/32/0/underline_position = 0.0
 cache/0/32/0/underline_thickness = 0.0
 cache/0/32/0/scale = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7edlk"]
+size = Vector3(2.760254, 2.5526123, 2.262207)
 
 [node name="Node3D" type="Node3D" unique_id=1254255082]
 script = ExtResource("1_ri6rb")
@@ -689,11 +697,6 @@ shape = SubResource("BoxShape3D_0rh38")
 transform = Transform3D(0.9999848, 0, 0, 0, 1, 0, 0, 0, 0.9999751, 0.9604646, 0, -0.79308724)
 shape = SubResource("BoxShape3D_0rh38")
 
-[node name="Butcher" type="Sprite3D" parent="." unique_id=1743969581]
-transform = Transform3D(0.25, 0, 0, 0, 0.192, 0, 0, 0, 0.208, 6.077442, 1.4574885, -16.845083)
-billboard = 2
-texture = ExtResource("19_f08mq")
-
 [node name="CheckoutArea" type="Area3D" parent="." unique_id=49222381 node_paths=PackedStringArray("CashierDialogue", "CashierDialogueTimer", "GameState", "CashierSound")]
 transform = Transform3D(1.7103236, 0, 0, 0, 1.7049865, 0, 0, 0, 1, 6.871737, 1.2675464, -0.8532007)
 script = ExtResource("20_tx3db")
@@ -778,6 +781,37 @@ transform = Transform3D(-6.556708e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.556708e-08
 [node name="Car5" parent="ExternalDecor" unique_id=1080888497 instance=ExtResource("19_xn14s")]
 transform = Transform3D(-6.556708e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.556708e-08, 8.9366045, 0.22001779, 14.153893)
 
+[node name="ButcherArea" type="Area3D" parent="." unique_id=1366937856 node_paths=PackedStringArray("ButcherDialogue", "ButcherDialogueTimer", "DisgustSound")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6365175, 0.80755603, -14.944118)
+script = ExtResource("24_bbtm7")
+ButcherDialogue = NodePath("Butcher/ButcherDialogue")
+ButcherDialogueTimer = NodePath("ButcherDialogueTimer")
+DisgustSound = NodePath("AudioStreamPlayer3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ButcherArea" unique_id=511645410]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.88012695, 0.77630615, 0.6311035)
+shape = SubResource("BoxShape3D_7edlk")
+
+[node name="Butcher" type="Sprite3D" parent="ButcherArea" unique_id=1743969581]
+transform = Transform3D(0.25, 0, 0, 0, 0.192, 0, 0, 0, 0.208, -0.178401, 0.6499325, -1.9009657)
+billboard = 2
+texture = ExtResource("19_f08mq")
+
+[node name="ButcherDialogue" type="Label3D" parent="ButcherArea/Butcher" unique_id=1273697666]
+transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 0, 6.4369707, 7.6672287)
+visible = false
+pixel_size = 0.02
+billboard = 2
+text = "I could supply you some, cozies
+straight from the big Z.B!"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="ButcherArea" unique_id=1439027749]
+stream = ExtResource("26_c6gt8")
+volume_db = 14.204
+
+[node name="ButcherDialogueTimer" type="Timer" parent="ButcherArea" unique_id=2106167310]
+wait_time = 2.85
+
 [connection signal="Update_Ending" from="." to="CanvasLayer" method="_on_node_3d_update_ending"]
 [connection signal="Update_Pull_Force" from="." to="CanvasLayer" method="_on_trajectory_builder_game_update_pull_force"]
 [connection signal="Update_Shopping_List" from="." to="CanvasLayer" method="_on_node_3d_update_shopping_list"]
@@ -786,3 +820,6 @@ transform = Transform3D(-6.556708e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.556708e-08
 [connection signal="body_entered" from="EndGameArea" to="." method="_on_end_game_area_body_entered"]
 [connection signal="target_stayed" from="CheckoutArea" to="." method="_on_checkout_area_target_stayed"]
 [connection signal="timeout" from="CheckoutArea/Cashier/CashierDialogueTimer" to="CheckoutArea" method="_on_cashier_dialogue_timer_timeout"]
+[connection signal="body_entered" from="ButcherArea" to="ButcherArea" method="_on_body_entered"]
+[connection signal="body_exited" from="ButcherArea" to="ButcherArea" method="_on_body_exited"]
+[connection signal="timeout" from="ButcherArea/ButcherDialogueTimer" to="ButcherArea" method="_on_butcher_dialogue_timer_timeout"]
