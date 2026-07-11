@@ -1,0 +1,168 @@
+[gd_scene format=3 uid="uid://h74x1ii0grb5"]
+
+[ext_resource type="Script" uid="uid://cbc23o0h0lvba" path="res://Scripts/PhysicsItem.gd" id="1_sdq41"]
+[ext_resource type="AudioStream" uid="uid://cmnwg2ga1qjmq" path="res://Sfx/bump.mp3" id="2_nqx7g"]
+[ext_resource type="Material" uid="uid://cod825ryhaplu" path="res://Assets/metal.tres" id="3_a3wae"]
+[ext_resource type="Texture2D" uid="uid://bkpugn8hj3u2b" path="res://Assets/metalshelftexture.jpg" id="4_pl1oe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a3wae"]
+albedo_color = Color(0.27022192, 0.27022192, 0.2702219, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tojp5"]
+material = SubResource("StandardMaterial3D_a3wae")
+size = Vector3(0.05, 0.75, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pl1oe"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.20784314)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f6hcw"]
+material = SubResource("StandardMaterial3D_pl1oe")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sdq41"]
+size = Vector3(0.05, 0.74, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nqx7g"]
+material = ExtResource("3_a3wae")
+size = Vector3(0.2, 1.5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lt50j"]
+size = Vector3(0.2, 1.5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nqx7g"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lt50j"]
+material = ExtResource("3_a3wae")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f6hcw"]
+albedo_texture = ExtResource("4_pl1oe")
+uv1_scale = Vector3(5, 5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ev4nn"]
+material = SubResource("StandardMaterial3D_f6hcw")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bd347"]
+albedo_texture = ExtResource("4_pl1oe")
+uv1_scale = Vector3(5, 5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_iuiuw"]
+material = SubResource("StandardMaterial3D_bd347")
+
+[node name="Fridge" type="Node3D" unique_id=199786026]
+
+[node name="FridgeDoor" type="RigidBody3D" parent="." unique_id=1791756369 node_paths=PackedStringArray("Audio_Player") groups=["Interactible"]]
+script = ExtResource("1_sdq41")
+Audio_Player = NodePath("../AudioStreamPlayer3D")
+Bump_Sfx = ExtResource("2_nqx7g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FridgeDoor" unique_id=500964795]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 0.324857, 0, 0, 0.42400938)
+mesh = SubResource("BoxMesh_tojp5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="FridgeDoor" unique_id=273576329]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 0.324857, 0, 0, -0.4178807)
+mesh = SubResource("BoxMesh_tojp5")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="FridgeDoor" unique_id=233603858]
+transform = Transform3D(2, 0, 0, 0, 0.18670404, 0, 0, 0, 1.365397, -0.00076776743, -0.6806412, 0.0067875236)
+mesh = SubResource("BoxMesh_tojp5")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="FridgeDoor" unique_id=30661179]
+transform = Transform3D(2, 0, 0, 0, 0.18670404, 0, 0, 0, 1.365397, -0.00076776743, 0.67861867, 0.0067875236)
+mesh = SubResource("BoxMesh_tojp5")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="FridgeDoor" unique_id=914064834]
+transform = Transform3D(-0.011055097, 0, 0, 0, 1.3743613, 0, 0, 0, 0.79921305, -0.00076776743, -0.039681613, 0.0067875236)
+mesh = SubResource("BoxMesh_f6hcw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FridgeDoor" unique_id=1987218369]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_sdq41")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="." unique_id=1175745300]
+transform = Transform3D(0.9999999, -8.940697e-08, 8.742276e-08, 8.7422755e-08, -4.3711385e-08, -1, 8.940697e-08, 0.9999999, -4.371138e-08, 0, 0, 0.5208334)
+node_a = NodePath("../FridgeDoor")
+node_b = NodePath("../FridgeHinge")
+angular_limit/enable = true
+angular_limit/lower = 0.0
+
+[node name="FridgeHinge" type="StaticBody3D" parent="." unique_id=1393028487]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.246379, 0, 0, 0.61672944)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FridgeHinge" unique_id=797588151]
+mesh = SubResource("BoxMesh_nqx7g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FridgeHinge" unique_id=92725361]
+shape = SubResource("BoxShape3D_lt50j")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=565293808]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=178937844]
+transform = Transform3D(1, 0, 0, 0, 0.21813607, 0, 0, 0, 1.4339883, -0.4139483, -0.87046707, 0.04676193)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1408712946]
+shape = SubResource("BoxShape3D_nqx7g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=628404814]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01595819, 0, 0)
+mesh = SubResource("BoxMesh_lt50j")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="." unique_id=590971569]
+transform = Transform3D(1, 0, 0, 0, 0.1635673, 0, 0, 0, 1.5238181, -0.4139483, 0.8355315, 0.07492012)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D5" unique_id=918026653]
+shape = SubResource("BoxShape3D_nqx7g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D5" unique_id=413954306]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01595819, 0, 0)
+mesh = SubResource("BoxMesh_lt50j")
+
+[node name="StaticBody3D7" type="StaticBody3D" parent="." unique_id=1796121451]
+transform = Transform3D(0.43020713, 0, 0, 0, 0.062189054, 0, 0, 0, 1.3068382, -0.60175836, 0.32136923, 0.07492012)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D7" unique_id=1772932631]
+shape = SubResource("BoxShape3D_nqx7g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D7" unique_id=454738049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01595819, 0, 0)
+mesh = SubResource("BoxMesh_ev4nn")
+
+[node name="StaticBody3D8" type="StaticBody3D" parent="." unique_id=1962446958]
+transform = Transform3D(0.43020713, 0, 0, 0, 0.062189054, 0, 0, 0, 1.3068382, -0.60175836, -0.21550362, 0.07492012)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D8" unique_id=798139954]
+shape = SubResource("BoxShape3D_nqx7g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D8" unique_id=195741992]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01595819, 0, 0)
+mesh = SubResource("BoxMesh_iuiuw")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=1171057207]
+transform = Transform3D(1, 0, 0, 0, 1.5439116, 0, 0, 0, 0.16480343, -0.4139483, -0.017200172, -0.58807725)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=804227016]
+shape = SubResource("BoxShape3D_nqx7g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=627543551]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01595819, 0, 0)
+mesh = SubResource("BoxMesh_lt50j")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="." unique_id=1497943460]
+transform = Transform3D(1, 0, 0, 0, 1.7618569, 0, 0, 0, 0.10809378, -0.4139483, -0.10258937, 0.7802511)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3" unique_id=148792296]
+shape = SubResource("BoxShape3D_nqx7g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3" unique_id=155212806]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01595819, 0, 0)
+mesh = SubResource("BoxMesh_lt50j")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="." unique_id=315644630]
+transform = Transform3D(0.10946894, 0, 0, 0, 1.5439116, 0, 0, 0, 1.2714756, -0.8465247, -0.017200172, 0.097120345)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4" unique_id=15345127]
+shape = SubResource("BoxShape3D_nqx7g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D4" unique_id=1146205180]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01595819, 0, 0)
+mesh = SubResource("BoxMesh_lt50j")

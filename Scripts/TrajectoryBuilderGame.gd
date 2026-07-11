@@ -1,7 +1,9 @@
 extends Node3D
 
+signal Update_Shopping_Notify_Exit
 signal Update_Pull_Force
 signal Update_Shopping_List
+signal Update_Ending
 
 enum CameraMode {
 	Free,
@@ -31,6 +33,7 @@ var trajectory_pointer: Node3D
 var cached_free_camera_angle: Vector3
 var current_line: Node3D
 var Force_Modifier: float
+var items_taken: bool
 var done_shopping: bool
 var checked_out: bool
 
@@ -45,6 +48,7 @@ func _ready() -> void:
 	Force_Modifier = 6
 	emit_signal("Update_Pull_Force", Force_Modifier)
 	emit_signal("Update_Shopping_List", shopping_list)
+	items_taken = false
 	done_shopping = false
 	checked_out = false
 
@@ -121,17 +125,17 @@ func drag_cursor():
 	var new_cursor_point = drag_plane.intersects_ray(from, drag_ray)
 	
 	if new_cursor_point != null:
-		var distance_from_obj = abs(selected_object.position.distance_to(new_cursor_point))
+		var distance_from_obj = abs(selected_object.global_position.distance_to(new_cursor_point))
 		if distance_from_obj <= max_dist_from_obj:
-			trajectory_pointer.position = new_cursor_point
+			trajectory_pointer.global_position = new_cursor_point
 		else:
-			var ray = ((new_cursor_point as Vector3) - selected_object.position).normalized()
-			trajectory_pointer.position = (selected_object.position + ray * max_dist_from_obj)
+			var ray = ((new_cursor_point as Vector3) - selected_object.global_position).normalized()
+			trajectory_pointer.global_position = (selected_object.global_position + ray * max_dist_from_obj)
 		
 		# generate line
 		if current_line != null:
 			current_line.queue_free()
-		var mesh_instance = generate_line(selected_object.position, trajectory_pointer.position)	
+		var mesh_instance = generate_line(selected_object.global_position, trajectory_pointer.global_position)	
 		current_line = mesh_instance
 		get_tree().get_root().add_child(mesh_instance)
 
@@ -190,15 +194,35 @@ func cast_for_item(event: InputEvent) -> void:
 				calculate_plane()
 
 func _on_player_capture_item(body: Node3D) -> void:
+	if done_shopping:
+		return
+	
 	if body == selected_object:
 		switch_to_select_object()
 	
 	var object_name = body.object_name
 	if object_name in shopping_list:
+		items_taken = true
 		shopping_list[object_name] -= 1
 		if shopping_list[object_name] == 0:
 			shopping_list.erase(object_name)
 		emit_signal("Update_Shopping_List", shopping_list)
+		body.queue_free()
 		
 	if len(shopping_list.keys()) == 0:
 		done_shopping = true
+
+
+func _on_end_game_area_body_entered(body: Node3D) -> void:
+	if body.is_in_group("Player"):
+		if items_taken == false:
+			emit_signal("Update_Ending", "BadEnding")
+		elif checked_out == false:
+			emit_signal("Update_Ending", "RetardEnding")
+		elif checked_out == true:
+			emit_signal("Update_Ending", "GoodEnding")
+
+func _on_checkout_area_target_stayed(body: Node3D) -> void:
+	if done_shopping:
+		checked_out = true
+		emit_signal("Update_Shopping_Notify_Exit")

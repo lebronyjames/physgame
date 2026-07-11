@@ -23,7 +23,6 @@
 [ext_resource type="PackedScene" uid="uid://db13ctf3t0wvj" path="res://Assets/2010 Nissan Altima Coupe 2_5 S.fbx" id="19_xn14s"]
 [ext_resource type="Script" uid="uid://dk080vuk1v1tm" path="res://Scripts/CheckoutTimer.gd" id="20_tx3db"]
 [ext_resource type="Texture2D" uid="uid://cpf4eg6ees2i1" path="res://Assets/cashregister.png" id="22_4sn81"]
-[ext_resource type="AudioStream" uid="uid://b163kwn01aqf8" path="res://Sfx/cashier.mp3" id="22_7edlk"]
 
 [sub_resource type="Sky" id="Sky_fi62q"]
 resource_local_to_scene = true
@@ -82,27 +81,6 @@ size = Vector3(0.9376221, 1, 2.5861816)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_78kfj"]
 size = Vector3(0.5015869, 1, 0.7285156)
-
-[sub_resource type="FontFile" id="FontFile_tx3db"]
-cache/0/variation_coordinates = {}
-cache/0/face_index = 0
-cache/0/embolden = 0.0
-cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
-cache/0/spacing_top = 0
-cache/0/spacing_bottom = 0
-cache/0/spacing_space = 0
-cache/0/spacing_glyph = 0
-cache/0/baseline_offset = 0.0
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-cache/0/32/0/ascent = 0.0
-cache/0/32/0/descent = 0.0
-cache/0/32/0/underline_position = 0.0
-cache/0/32/0/underline_thickness = 0.0
-cache/0/32/0/scale = 1.0
 
 [node name="Node3D" type="Node3D" unique_id=1254255082]
 script = ExtResource("1_ri6rb")
@@ -435,6 +413,21 @@ size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxTexture_m50br")
 metadata/_edit_use_anchors_ = true
 
+[node name="Shelf" parent="." unique_id=679428935 instance=ExtResource("5_ri6rb")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.3608956, 1.3100882, -7.463631)
+
+[node name="Shelf2" parent="." unique_id=665427445 instance=ExtResource("5_ri6rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.688848, 1.3100882, -7.463631)
+
+[node name="Shelf3" parent="." unique_id=1104357734 instance=ExtResource("5_ri6rb")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7.131029, 1.3100882, -7.463631)
+
+[node name="Shelf5" parent="." unique_id=785102341 instance=ExtResource("5_ri6rb")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 12.172628, 1.3100882, -7.463631)
+
+[node name="Shelf4" parent="." unique_id=2154372 instance=ExtResource("5_ri6rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4566927, 1.3100882, -7.463631)
+
 [node name="Meat Room" type="Node3D" parent="." unique_id=643868803]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Meat Room" unique_id=1726225240]
@@ -623,6 +616,21 @@ use_collision = true
 size = Vector3(0.18759155, 0.42913818, 1.7165604)
 material = SubResource("StandardMaterial3D_xn14s")
 
+[node name="CheckoutLine" type="Node3D" parent="." unique_id=1575222055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.235886, 0.32770014, 0.38426554)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CheckoutLine" unique_id=867710088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29957604, 0)
+use_collision = true
+size = Vector3(5.186035, 1, 1)
+material = ExtResource("7_u86cj")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CheckoutLine" unique_id=391893293]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.52303493, 0.7389761, 0)
+use_collision = true
+size = Vector3(3.70813, 0.1430664, 0.6581421)
+material = SubResource("StandardMaterial3D_puqvf")
+
 [node name="CheckoutLine2" type="Node3D" parent="." unique_id=321136698]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.106611, 0.32770014, 0.38426554)
 
@@ -638,41 +646,22 @@ use_collision = true
 size = Vector3(3.70813, 0.1430664, 0.6581421)
 material = SubResource("StandardMaterial3D_puqvf")
 
-[node name="Shelves" type="Node3D" parent="." unique_id=1925757397]
-
-[node name="Shelf" parent="Shelves" unique_id=679428935 instance=ExtResource("5_ri6rb")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.3608956, 1.3100882, -7.463631)
-
-[node name="Shelf2" parent="Shelves" unique_id=665427445 instance=ExtResource("5_ri6rb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.688848, 1.3100882, -7.463631)
-
-[node name="Shelf3" parent="Shelves" unique_id=1104357734 instance=ExtResource("5_ri6rb")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7.131029, 1.3100882, -7.463631)
-
-[node name="Shelf5" parent="Shelves" unique_id=785102341 instance=ExtResource("5_ri6rb")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 12.172628, 1.3100882, -7.463631)
-
-[node name="Shelf4" parent="Shelves" unique_id=2154372 instance=ExtResource("5_ri6rb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4566927, 1.3100882, -7.463631)
-
-[node name="Fridges" type="Node3D" parent="." unique_id=1851956592]
-
-[node name="Fridge" parent="Fridges" unique_id=199786026 instance=ExtResource("7_cb5hs")]
+[node name="Fridge" parent="." unique_id=199786026 instance=ExtResource("7_cb5hs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.227717, 1.272557, -3.6852553)
 
-[node name="Fridge2" parent="Fridges" unique_id=1761790750 instance=ExtResource("7_cb5hs")]
+[node name="Fridge2" parent="." unique_id=1761790750 instance=ExtResource("7_cb5hs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.227717, 1.272557, -5.1934376)
 
-[node name="Fridge3" parent="Fridges" unique_id=1133694436 instance=ExtResource("7_cb5hs")]
+[node name="Fridge3" parent="." unique_id=1133694436 instance=ExtResource("7_cb5hs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.227717, 1.272557, -6.70925)
 
-[node name="Fridge4" parent="Fridges" unique_id=1133262264 instance=ExtResource("7_cb5hs")]
+[node name="Fridge4" parent="." unique_id=1133262264 instance=ExtResource("7_cb5hs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.227717, 1.272557, -8.217432)
 
-[node name="Fridge5" parent="Fridges" unique_id=2091602288 instance=ExtResource("7_cb5hs")]
+[node name="Fridge5" parent="." unique_id=2091602288 instance=ExtResource("7_cb5hs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.227717, 1.272557, -9.755095)
 
-[node name="Fridge6" parent="Fridges" unique_id=348274431 instance=ExtResource("7_cb5hs")]
+[node name="Fridge6" parent="." unique_id=348274431 instance=ExtResource("7_cb5hs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.227717, 1.272557, -11.263277)
 
 [node name="EndGameArea" type="Area3D" parent="." unique_id=267600687]
@@ -689,94 +678,55 @@ shape = SubResource("BoxShape3D_0rh38")
 transform = Transform3D(0.9999848, 0, 0, 0, 1, 0, 0, 0, 0.9999751, 0.9604646, 0, -0.79308724)
 shape = SubResource("BoxShape3D_0rh38")
 
+[node name="Cashier" type="Sprite3D" parent="." unique_id=4843310]
+transform = Transform3D(0.042719766, 0, 0, 0, 0.03302133, 0, 0, 0, 0.036240816, 7.128027, 1.1691906, 1.3365257)
+billboard = 2
+texture = ExtResource("11_78kfj")
+
 [node name="Butcher" type="Sprite3D" parent="." unique_id=1743969581]
 transform = Transform3D(0.25, 0, 0, 0, 0.192, 0, 0, 0, 0.208, 6.077442, 1.4574885, -16.845083)
 billboard = 2
 texture = ExtResource("19_f08mq")
 
-[node name="CheckoutArea" type="Area3D" parent="." unique_id=49222381 node_paths=PackedStringArray("CashierDialogue", "CashierDialogueTimer", "GameState", "CashierSound")]
+[node name="CheckoutArea" type="Area3D" parent="." unique_id=49222381]
 transform = Transform3D(1.7103236, 0, 0, 0, 1.7049865, 0, 0, 0, 1, 6.871737, 1.2675464, -0.8532007)
 script = ExtResource("20_tx3db")
-CashierDialogue = NodePath("Cashier/CashierDialogue")
-CashierDialogueTimer = NodePath("Cashier/CashierDialogueTimer")
-GameState = NodePath("..")
-CashierSound = NodePath("CashierSound")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CheckoutArea" unique_id=1438835662]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13653564, 0, 0.13574219)
 shape = SubResource("BoxShape3D_78kfj")
 
-[node name="Cashier" type="Sprite3D" parent="CheckoutArea" unique_id=4843310]
-transform = Transform3D(0.024977593, 0, 0, 0, 0.019367505, 0, 0, 0, 0.036240816, 0.14984894, -0.057687104, 2.1897264)
-billboard = 2
-texture = ExtResource("11_78kfj")
-
-[node name="CashierDialogue" type="Label3D" parent="CheckoutArea/Cashier" unique_id=1916527385]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 39.69252, 0)
-visible = false
-pixel_size = 0.2
-billboard = 2
-text = "hello
-"
-font = SubResource("FontFile_tx3db")
-
-[node name="CashierDialogueTimer" type="Timer" parent="CheckoutArea/Cashier" unique_id=473101843]
-wait_time = 2.85
-
-[node name="Sprite3D" type="Sprite3D" parent="CheckoutArea" unique_id=975303798]
-transform = Transform3D(0.08770271, 0, 0, 0, 0.087977245, 0, 0, 0, 0.15, 0.15999937, 0.114334464, 1.1453876)
-billboard = 2
-texture = ExtResource("22_4sn81")
-
-[node name="CheckoutLine" type="Node3D" parent="CheckoutArea" unique_id=1575222055]
-transform = Transform3D(0.58468467, 0, 0, 0, 0.58651495, 0, 0, 0, 1, -0.95645714, -0.5512339, 1.2374662)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="CheckoutArea/CheckoutLine" unique_id=867710088]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29957604, 0)
-use_collision = true
-size = Vector3(5.186035, 1, 1)
-material = ExtResource("7_u86cj")
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="CheckoutArea/CheckoutLine" unique_id=391893293]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.52303493, 0.7389761, 0)
-use_collision = true
-size = Vector3(3.70813, 0.1430664, 0.6581421)
-material = SubResource("StandardMaterial3D_puqvf")
-
-[node name="CashierSound" type="AudioStreamPlayer3D" parent="CheckoutArea" unique_id=1979999700]
-transform = Transform3D(0.58468467, 0, 0, 0, 0.58651495, 0, 0, 0, 1, 0, -0.0115042925, 1.2869419)
-stream = ExtResource("22_7edlk")
-
-[node name="LightArrays" type="Node3D" parent="." unique_id=242670013]
-
-[node name="LightArray" parent="LightArrays" unique_id=2122490878 instance=ExtResource("15_dol1n")]
+[node name="LightArray" parent="." unique_id=2122490878 instance=ExtResource("15_dol1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002761364, 4.3497763, -5.787311)
 
-[node name="LightArray2" parent="LightArrays" unique_id=906311788 instance=ExtResource("15_dol1n")]
+[node name="LightArray2" parent="." unique_id=906311788 instance=ExtResource("15_dol1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6510167, 4.3497763, -5.787311)
 
-[node name="LightArray3" parent="LightArrays" unique_id=1440556979 instance=ExtResource("15_dol1n")]
+[node name="LightArray3" parent="." unique_id=1440556979 instance=ExtResource("15_dol1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.196142, 4.3497763, -5.787311)
 
-[node name="LightArray4" parent="LightArrays" unique_id=862608112 instance=ExtResource("15_dol1n")]
+[node name="LightArray4" parent="." unique_id=862608112 instance=ExtResource("15_dol1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.820501, 4.3497763, -5.787311)
 
-[node name="ExternalDecor" type="Node3D" parent="." unique_id=988649249]
-
-[node name="Car" parent="ExternalDecor" unique_id=992638877 instance=ExtResource("19_xn14s")]
+[node name="Car" parent="." unique_id=992638877 instance=ExtResource("19_xn14s")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 2.7791266, 0.22001779, 7.7298784)
 
-[node name="Car2" parent="ExternalDecor" unique_id=547748742 instance=ExtResource("19_xn14s")]
+[node name="Car2" parent="." unique_id=547748742 instance=ExtResource("19_xn14s")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 5.6471934, 0.22001779, 7.7298784)
 
-[node name="Car3" parent="ExternalDecor" unique_id=1042663624 instance=ExtResource("19_xn14s")]
+[node name="Car3" parent="." unique_id=1042663624 instance=ExtResource("19_xn14s")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 8.532192, 0.22001779, 7.7298784)
 
-[node name="Car4" parent="ExternalDecor" unique_id=1133376969 instance=ExtResource("19_xn14s")]
+[node name="Car4" parent="." unique_id=1133376969 instance=ExtResource("19_xn14s")]
 transform = Transform3D(-6.556708e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.556708e-08, 3.8135676, 0.22001779, 14.153893)
 
-[node name="Car5" parent="ExternalDecor" unique_id=1080888497 instance=ExtResource("19_xn14s")]
+[node name="Car5" parent="." unique_id=1080888497 instance=ExtResource("19_xn14s")]
 transform = Transform3D(-6.556708e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.556708e-08, 8.9366045, 0.22001779, 14.153893)
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=975303798]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 7.1453876, 1.4624851, 0.29218698)
+billboard = 2
+texture = ExtResource("22_4sn81")
 
 [connection signal="Update_Ending" from="." to="CanvasLayer" method="_on_node_3d_update_ending"]
 [connection signal="Update_Pull_Force" from="." to="CanvasLayer" method="_on_trajectory_builder_game_update_pull_force"]
@@ -785,4 +735,3 @@ transform = Transform3D(-6.556708e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.556708e-08
 [connection signal="Capture_Item" from="Player" to="." method="_on_player_capture_item"]
 [connection signal="body_entered" from="EndGameArea" to="." method="_on_end_game_area_body_entered"]
 [connection signal="target_stayed" from="CheckoutArea" to="." method="_on_checkout_area_target_stayed"]
-[connection signal="timeout" from="CheckoutArea/Cashier/CashierDialogueTimer" to="CheckoutArea" method="_on_cashier_dialogue_timer_timeout"]

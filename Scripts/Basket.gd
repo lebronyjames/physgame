@@ -15,4 +15,3 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if "object_name" in body:
 		emit_signal("Capture_Item", body)
-		body.queue_free()

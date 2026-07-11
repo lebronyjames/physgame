@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bwualeiryvemo"]
 
 [ext_resource type="Script" uid="uid://bldy1kbvnshv4" path="res://Scripts/PlayerInteractible.gd" id="1_vxq8l"]
-[ext_resource type="Texture2D" uid="uid://dqubdggkdf5gi" path="res://cozyglow.png" id="2_b43ah"]
 [ext_resource type="AudioStream" uid="uid://cmnwg2ga1qjmq" path="res://Sfx/bump.mp3" id="2_vxq8l"]
 [ext_resource type="PackedScene" uid="uid://e0inprs6sme3" path="res://Assets/scooter.fbx" id="3_b43ah"]
+[ext_resource type="Texture2D" uid="uid://cg8psohl0ynhw" path="res://Assets/alicorn_cozy_glow__by_cloudyglow_ddn15cx-fullview.png" id="3_vxq8l"]
 [ext_resource type="Script" uid="uid://c55meo2kcseew" path="res://Scripts/Basket.gd" id="4_shmu5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_b43ah"]
@@ -23,7 +23,7 @@ size = Vector3(0.8607178, 0.15002441, 0.46218872)
 mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_b43ah")
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, -0.2, 0.2)
+center_of_mass = Vector3(0, -0.2, 0.5)
 script = ExtResource("1_vxq8l")
 Audio_Player = NodePath("AudioStreamPlayer3D")
 Bump_Sfx = ExtResource("2_vxq8l")
@@ -43,8 +43,10 @@ current = true
 [node name="IterationTimer" type="Timer" parent="." unique_id=112744479]
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1095324360]
-transform = Transform3D(0.14133221, 0, 0, 0, 0.08682954, 0, 0, 0, 1, 0, 0.37680292, -0.01916942)
-texture = ExtResource("2_b43ah")
+transform = Transform3D(0.08469029, 0, 0, 0, 0.06726353, 0, 0, 0, 1, 0, 0.37680292, -0.01916942)
+flip_h = true
+billboard = 2
+texture = ExtResource("3_vxq8l")
 
 [node name="scooter" parent="." unique_id=712680385 instance=ExtResource("3_b43ah")]
 transform = Transform3D(-3.496911e-09, 0, 0.08, 0, 0.08, 0, -0.08, 0, -3.496911e-09, 0, -0.033564955, -0.12979293)
@@ -80,7 +82,7 @@ size = Vector3(0.8640747, 0.2508545, 0.02709961)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13658142, -0.49334717)
 shape = SubResource("BoxShape3D_b43ah")
 
-[node name="BasketTrigger" type="Area3D" parent="." unique_id=1461193689]
+[node name="BasketTrigger" type="Area3D" parent="." unique_id=1461193689 groups=["Interactible", "Player"]]
 script = ExtResource("4_shmu5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BasketTrigger" unique_id=3315003]
