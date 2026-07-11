@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://bq60yghqxedg8"]
+
+[ext_resource type="Script" uid="uid://cbc23o0h0lvba" path="res://Scripts/PhysicsItem.gd" id="1_25vlr"]
+[ext_resource type="AudioStream" uid="uid://bs3di2ruj8ifq" path="res://Sfx/jixaw-metal-pipe-falling-sound.mp3" id="2_51vqu"]
+[ext_resource type="Texture2D" uid="uid://bkpugn8hj3u2b" path="res://Assets/metalshelftexture.jpg" id="3_obnfv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qfsb7"]
+friction = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dpekq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_olelx"]
+albedo_texture = ExtResource("3_obnfv")
+uv1_scale = Vector3(20, 10, 20)
+uv1_offset = Vector3(1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vew2c"]
+material = SubResource("StandardMaterial3D_olelx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hxjkh"]
+albedo_texture = ExtResource("3_obnfv")
+uv1_scale = Vector3(5, 10, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_obnfv"]
+material = SubResource("StandardMaterial3D_hxjkh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5g0di"]
+albedo_texture = ExtResource("3_obnfv")
+uv1_scale = Vector3(5, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hxjkh"]
+material = SubResource("StandardMaterial3D_5g0di")
+
+[node name="RigidBody3D" type="RigidBody3D" unique_id=665427445 node_paths=PackedStringArray("Audio_Player")]
+mass = 3.0
+physics_material_override = SubResource("PhysicsMaterial_qfsb7")
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_25vlr")
+Audio_Player = NodePath("AudioStreamPlayer3D")
+Bump_Sfx = ExtResource("2_51vqu")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1248632113]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2006303945]
+transform = Transform3D(0.22693014, 0, 0, 0, 1.9435248, 0, 0, 0, 9.298812, 0, 0, 0)
+shape = SubResource("BoxShape3D_dpekq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=1339726923]
+mesh = SubResource("BoxMesh_vew2c")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=911941555]
+transform = Transform3D(0.91399086, 0, 0, 0, 0.12872393, 0, 0, 0, 9.298812, 0.56146646, 0.18961, 0)
+shape = SubResource("BoxShape3D_dpekq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D2" unique_id=75453165]
+mesh = SubResource("BoxMesh_obnfv")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." unique_id=72869058]
+transform = Transform3D(0.91399086, 0, 0, 0, 0.12872393, 0, 0, 0, 9.298812, 0.56146646, -0.9116993, 0)
+shape = SubResource("BoxShape3D_dpekq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D3" unique_id=1092366221]
+transform = Transform3D(0.99999964, 0, 0, 0, 0.99999976, 0, 0, 0, 0.9999999, 0, 0.06459665, 0)
+mesh = SubResource("BoxMesh_hxjkh")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,65 +1,96 @@
 [gd_scene format=3 uid="uid://bwualeiryvemo"]
 
-[ext_resource type="Script" uid="uid://dpw1g0ftfjxeg" path="res://Scripts/Controller.gd" id="1_x3d5u"]
-[ext_resource type="Texture2D" uid="uid://dqubdggkdf5gi" path="res://cozyglow.png" id="2_b43ah"]
+[ext_resource type="Script" uid="uid://bldy1kbvnshv4" path="res://Scripts/PlayerInteractible.gd" id="1_vxq8l"]
+[ext_resource type="AudioStream" uid="uid://cmnwg2ga1qjmq" path="res://Sfx/bump.mp3" id="2_vxq8l"]
+[ext_resource type="PackedScene" uid="uid://e0inprs6sme3" path="res://Assets/scooter.fbx" id="3_b43ah"]
+[ext_resource type="Texture2D" uid="uid://cg8psohl0ynhw" path="res://Assets/alicorn_cozy_glow__by_cloudyglow_ddn15cx-fullview.png" id="3_vxq8l"]
+[ext_resource type="Script" uid="uid://c55meo2kcseew" path="res://Scripts/Basket.gd" id="4_shmu5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_b43ah"]
+friction = 0.05
+bounce = 0.12
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o3cl4"]
-size = Vector3(1, 0.6563721, 1)
+size = Vector3(1, 0.6563721, 0.81689453)
 
-[sub_resource type="Animation" id="Animation_x3d5u"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CameraRoot:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-1.5707964, 0, 0)]
-}
+[sub_resource type="BoxShape3D" id="BoxShape3D_b43ah"]
+size = Vector3(1, 0.3829651, 0.614624)
 
-[sub_resource type="Animation" id="Animation_b43ah"]
-resource_name = "XZ_Mode"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CameraRoot:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-1.5707964, 0, 0)]
-}
+[sub_resource type="BoxShape3D" id="BoxShape3D_shmu5"]
+size = Vector3(0.8607178, 0.15002441, 0.46218872)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_shmu5"]
-_data = {
-&"RESET": SubResource("Animation_x3d5u"),
-&"XZ_Mode": SubResource("Animation_b43ah")
-}
-
-[node name="Player" type="CharacterBody3D" unique_id=751433719]
-script = ExtResource("1_x3d5u")
+[node name="Player" type="RigidBody3D" unique_id=949166132 node_paths=PackedStringArray("Audio_Player") groups=["Interactible"]]
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_b43ah")
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -0.2, 0.5)
+script = ExtResource("1_vxq8l")
+Audio_Player = NodePath("AudioStreamPlayer3D")
+Bump_Sfx = ExtResource("2_vxq8l")
+object_name = "Player"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=509311057]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.21899414)
 shape = SubResource("BoxShape3D_o3cl4")
-
-[node name="Sprite3D" type="Sprite3D" parent="CollisionShape3D" unique_id=1095324360]
-transform = Transform3D(0.14133221, 0, 0, 0, 0.08682954, 0, 0, 0, 1, 0, -0.0062476397, 0)
-texture = ExtResource("2_b43ah")
 
 [node name="CameraRoot" type="Node3D" parent="." unique_id=1752351649]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraRoot" unique_id=551157455]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20825344, 2.4747703)
+current = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=372633741]
-libraries/ = SubResource("AnimationLibrary_shmu5")
+[node name="IterationTimer" type="Timer" parent="." unique_id=112744479]
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1095324360]
+transform = Transform3D(0.08469029, 0, 0, 0, 0.06726353, 0, 0, 0, 1, 0, 0.37680292, -0.01916942)
+flip_h = true
+billboard = 2
+texture = ExtResource("3_vxq8l")
+
+[node name="scooter" parent="." unique_id=712680385 instance=ExtResource("3_b43ah")]
+transform = Transform3D(-3.496911e-09, 0, 0.08, 0, 0.08, 0, -0.08, 0, -3.496911e-09, 0, -0.033564955, -0.12979293)
+
+[node name="Basket" type="Node3D" parent="." unique_id=107111794]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Basket" unique_id=1966640771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08732796, -0.5160661)
+use_collision = true
+size = Vector3(0.9086914, 0.02734375, 0.5422363)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Basket" unique_id=1998453363]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4420166, 0.22758883, -0.51515883)
+use_collision = true
+size = Vector3(0.024658203, 0.2508545, 0.5422363)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Basket" unique_id=1738430753]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43986827, 0.22758883, -0.51515883)
+use_collision = true
+size = Vector3(0.024658203, 0.2508545, 0.5422363)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Basket" unique_id=1813110438]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0013611913, 0.2270838, -0.7727493)
+use_collision = true
+size = Vector3(0.8640747, 0.2508545, 0.02709961)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Basket" unique_id=421565393]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0013611913, 0.2270838, -0.25934803)
+use_collision = true
+size = Vector3(0.8640747, 0.2508545, 0.02709961)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1676465267]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13658142, -0.49334717)
+shape = SubResource("BoxShape3D_b43ah")
+
+[node name="BasketTrigger" type="Area3D" parent="." unique_id=1461193689 groups=["Interactible", "Player"]]
+script = ExtResource("4_shmu5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BasketTrigger" unique_id=3315003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0076293945, 0.25145388, -0.52014804)
+shape = SubResource("BoxShape3D_shmu5")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1607287649]
+
+[connection signal="Capture_Item" from="BasketTrigger" to="." method="_on_basket_trigger_capture_item"]
+[connection signal="body_entered" from="BasketTrigger" to="BasketTrigger" method="_on_body_entered"]
+[connection signal="finished" from="AudioStreamPlayer3D" to="." method="_on_audio_stream_player_3d_finished"]

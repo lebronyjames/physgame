@@ -1,0 +1,7 @@
+[gd_resource type="PanoramaSkyMaterial" format=3 uid="uid://dcbu0u7vfs76s"]
+
+[ext_resource type="Texture2D" uid="uid://b2rssvqyrjra1" path="res://Assets/skybox2.png" id="1_wsj18"]
+
+[resource]
+resource_local_to_scene = true
+panorama = ExtResource("1_wsj18")
