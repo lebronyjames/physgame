@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://vljw0vbjki4f"]
+
+[ext_resource type="Script" uid="uid://duww7cy6js02f" path="res://Scripts/Interactible.gd" id="1_0rs6o"]
+[ext_resource type="AudioStream" uid="uid://cmnwg2ga1qjmq" path="res://Sfx/bump.mp3" id="2_4ss7m"]
+[ext_resource type="Texture2D" uid="uid://b2of56cfely3u" path="res://Assets/Foodstuffs/vanillaicecream.png" id="3_0rs6o"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ai62"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8tn17"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ia0ts"]
+albedo_texture = ExtResource("3_0rs6o")
+uv1_scale = Vector3(2, 2, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ci20f"]
+material = SubResource("StandardMaterial3D_ia0ts")
+
+[node name="Ice Cream" type="RigidBody3D" unique_id=122661780 node_paths=PackedStringArray("Audio_Player") groups=["Interactible"]]
+physics_material_override = SubResource("PhysicsMaterial_3ai62")
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_0rs6o")
+Audio_Player = NodePath("AudioStreamPlayer3D")
+Bump_Sfx = ExtResource("2_4ss7m")
+object_name = "Ice Cream"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=749514238]
+transform = Transform3D(0.2960869, 0, 0, 0, 0.11373035, 0, 0, 0, 0.19335127, 0, 0, 0.015136719)
+shape = SubResource("CylinderShape3D_8tn17")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=947768900]
+transform = Transform3D(-0.27111158, 8.223155e-09, 1.452516e-15, 2.3701325e-08, 0.09406191, 1.6614843e-08, 0, 8.223154e-09, -0.19005172, 0, 0, 0.015136719)
+mesh = SubResource("CylinderMesh_ci20f")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1999360639]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

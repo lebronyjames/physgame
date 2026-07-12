@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://diopv5f8umd3n"]
+
+[ext_resource type="Script" uid="uid://duww7cy6js02f" path="res://Scripts/Interactible.gd" id="1_ye712"]
+[ext_resource type="AudioStream" uid="uid://cmnwg2ga1qjmq" path="res://Sfx/bump.mp3" id="2_m3rc2"]
+[ext_resource type="Texture2D" uid="uid://db1oi34i1fbjo" path="res://Assets/Foodstuffs/kidneybeans.jpg" id="3_3ac73"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ai62"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8tn17"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ye712"]
+albedo_texture = ExtResource("3_3ac73")
+uv1_scale = Vector3(2, 2, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qo7a8"]
+material = SubResource("StandardMaterial3D_ye712")
+
+[node name="KidneyBeans" type="RigidBody3D" unique_id=122661780 node_paths=PackedStringArray("Audio_Player") groups=["Interactible"]]
+physics_material_override = SubResource("PhysicsMaterial_3ai62")
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_ye712")
+Audio_Player = NodePath("AudioStreamPlayer3D")
+Bump_Sfx = ExtResource("2_m3rc2")
+object_name = "Kidney Beans"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=749514238]
+transform = Transform3D(0.15, 0, 0, 0, 0.07919532, 0, 0, 0, 0.15, 0, 0, 0.015136719)
+shape = SubResource("CylinderShape3D_8tn17")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=224730881]
+transform = Transform3D(0.13043378, -1.145227e-08, 0, 2.2805768e-08, 0.06549935, 0, 0, 0, 0.13572663, 0, 0, 0.015136719)
+mesh = SubResource("CylinderMesh_qo7a8")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1999360639]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

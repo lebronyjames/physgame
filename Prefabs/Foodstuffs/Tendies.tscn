@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cr15uloaoqtwi"]
+
+[ext_resource type="Script" uid="uid://duww7cy6js02f" path="res://Scripts/Interactible.gd" id="1_nw6v3"]
+[ext_resource type="AudioStream" uid="uid://cmnwg2ga1qjmq" path="res://Sfx/bump.mp3" id="2_ik1lf"]
+[ext_resource type="Texture2D" uid="uid://c77c2u7ryf8p4" path="res://Assets/Foodstuffs/tendies.png" id="3_nw6v3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ai62"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y6ejq"]
+size = Vector3(2.8634644, 8.451714, 0.48388672)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ltoqv"]
+albedo_texture = ExtResource("3_nw6v3")
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n1ssp"]
+material = SubResource("StandardMaterial3D_ltoqv")
+
+[node name="Tendies" type="RigidBody3D" unique_id=122661780 node_paths=PackedStringArray("Audio_Player") groups=["Interactible"]]
+physics_material_override = SubResource("PhysicsMaterial_3ai62")
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_nw6v3")
+Audio_Player = NodePath("AudioStreamPlayer3D")
+Bump_Sfx = ExtResource("2_ik1lf")
+object_name = "Tendies"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=749514238]
+transform = Transform3D(0.15, 0, 0, 0, 0.045348097, 0, 0, 0, 0.15, 0.012748718, 0.03364844, -0.012329103)
+shape = SubResource("BoxShape3D_y6ejq")
+
+[node name="CSGCylinder3D" type="MeshInstance3D" parent="." unique_id=485887706]
+transform = Transform3D(-0.3974496, -3.034159e-08, -5.1640677e-16, -3.4746147e-08, 0.3470673, 5.907005e-09, 0, 3.034159e-08, -0.067568265, 0.021999791, 0.039810568, -0.003321791)
+mesh = SubResource("BoxMesh_n1ssp")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1999360639]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

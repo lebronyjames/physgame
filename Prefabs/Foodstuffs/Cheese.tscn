@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://d3dgh445dyowh"]
+
+[ext_resource type="Script" uid="uid://duww7cy6js02f" path="res://Scripts/Interactible.gd" id="1_co3tu"]
+[ext_resource type="AudioStream" uid="uid://cmnwg2ga1qjmq" path="res://Sfx/bump.mp3" id="2_l0qua"]
+[ext_resource type="Texture2D" uid="uid://di7nqvt1phvnw" path="res://Assets/Foodstuffs/cheese.jpg" id="3_co3tu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ai62"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y6ejq"]
+size = Vector3(2.8634644, 2.877411, 1.2358398)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ltoqv"]
+albedo_texture = ExtResource("3_co3tu")
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n1ssp"]
+material = SubResource("StandardMaterial3D_ltoqv")
+
+[node name="Cheese" type="RigidBody3D" unique_id=122661780 node_paths=PackedStringArray("Audio_Player") groups=["Interactible"]]
+physics_material_override = SubResource("PhysicsMaterial_3ai62")
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_co3tu")
+Audio_Player = NodePath("AudioStreamPlayer3D")
+Bump_Sfx = ExtResource("2_l0qua")
+object_name = "Cheese"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=749514238]
+transform = Transform3D(0.15, 0, 0, 0, 0.06196347, 0, 0, 0, 0.15, 0.012748718, 0.030465692, -0.0025512706)
+shape = SubResource("BoxShape3D_y6ejq")
+
+[node name="CSGCylinder3D" type="MeshInstance3D" parent="." unique_id=485887706]
+transform = Transform3D(-0.39744967, -1.2549292e-08, -1.2794325e-15, -3.4746154e-08, 0.14354716, 1.4635002e-08, 0, 1.2549292e-08, -0.1674049, 0.021999791, 0.039810568, -0.003321791)
+mesh = SubResource("BoxMesh_n1ssp")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1999360639]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
