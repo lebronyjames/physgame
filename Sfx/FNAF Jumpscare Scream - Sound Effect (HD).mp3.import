@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cgdlegvo2pw4i"
+path="res://.godot/imported/FNAF Jumpscare Scream - Sound Effect (HD).mp3-28105d7c359c5727f318655d088509b3.mp3str"
+
+[deps]
+
+source_file="res://Sfx/FNAF Jumpscare Scream - Sound Effect (HD).mp3"
+dest_files=["res://.godot/imported/FNAF Jumpscare Scream - Sound Effect (HD).mp3-28105d7c359c5727f318655d088509b3.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

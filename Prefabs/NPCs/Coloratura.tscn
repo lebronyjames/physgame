@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://2sokunqjrgvu"]
+
+[ext_resource type="Script" uid="uid://ceax5cchk1k2l" path="res://Scripts/NPC.gd" id="1_wbr6v"]
+[ext_resource type="AudioStream" uid="uid://b163kwn01aqf8" path="res://Sfx/cashier.mp3" id="2_70l53"]
+[ext_resource type="Texture2D" uid="uid://xwpvhu6q5nu2" path="res://Assets/NPCs/coloratura.png" id="3_wbr6v"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cmju8"]
+size = Vector3(1, 1.0610352, 1)
+
+[node name="Npc" type="CharacterBody3D" unique_id=888748321]
+script = ExtResource("1_wbr6v")
+checkout_sound = ExtResource("2_70l53")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=834086683]
+transform = Transform3D(0.7868416, 0, 0, 0, 1.4, 0, 0, 0, 0.1191535, 0, 0.7572754, 0)
+shape = SubResource("BoxShape3D_cmju8")
+disabled = true
+
+[node name="NavAgent" type="NavigationAgent3D" parent="." unique_id=822314435]
+
+[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="." unique_id=852276519]
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=197071362]
+transform = Transform3D(0.14373438, 0, 0, 0, 0.1361859, 0, 0, 0, 0.01191535, 0, 0.71939284, 0)
+billboard = 2
+texture = ExtResource("3_wbr6v")
