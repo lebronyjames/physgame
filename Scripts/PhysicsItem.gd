@@ -13,6 +13,6 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_body_entered(body: Node) -> void:
-	if body is RigidBody3D and body.linear_velocity.length() > 0.1:
+	if body is RigidBody3D and body.linear_velocity.length() > 0.2:
 		Audio_Player.stream = Bump_Sfx
 		Audio_Player.play()
