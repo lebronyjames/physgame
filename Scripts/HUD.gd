@@ -6,6 +6,10 @@ extends Node
 @onready var GoodEnding = $GoodEnding
 @onready var RetardEnding = $RetardEnding
 
+@onready var Song = $Song
+@onready var BadEndings = $BadEndings
+@onready var GoodEndingSong = $GoodEndingSong
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -37,10 +41,15 @@ func _on_node_3d_update_shopping_list(shopping_list: Dictionary[String, int]) ->
 func _on_node_3d_update_ending(ending: String) -> void:
 	if ending == "BadEnding":
 		BadEnding.visible = true
+		Song.stop()
+		BadEndings.play()
 	if ending == "RetardEnding":
 		RetardEnding.visible = true
+		Song.stop()
+		BadEndings.play()
 	if ending == "GoodEnding":
 		GoodEnding.visible = true
+		GoodEndingSong.play()
 
 
 func _on_node_3d_update_shopping_notify_exit() -> void:
